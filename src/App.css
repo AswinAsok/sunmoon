@@ -1,0 +1,102 @@
+/* Import fonts */
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap");
+@import url("https://api.fontshare.com/v2/css?f[]=mona-sans@1,2,3,4,5,6,7,8,9&display=swap");
+
+/* Apply global styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Nunito Sans", sans-serif; /* Default font */
+    background: #f7f7f7;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.title {
+    font-size: 36px;
+    margin-bottom: 20px;
+    font-family: "Mona Sans", sans-serif; /* Highlighted title font */
+    color: #333;
+}
+
+.score-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+}
+
+.section {
+    text-align: center;
+    width: 50%;
+}
+
+.image {
+    width: 120px;
+    margin-bottom: 10px;
+    animation: bounce 1.5s infinite;
+}
+
+.score {
+    font-size: 24px;
+    margin-bottom: 10px;
+    font-family: "Nunito Sans", sans-serif;
+    color: #444;
+}
+
+.button {
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.button:hover {
+    transform: scale(1.05);
+}
+
+.sun-button {
+    background: #ffd700;
+    color: #000;
+}
+
+.moon-button {
+    background: #708090;
+    color: #fff;
+}
+
+/* Bounce animation */
+@keyframes bounce {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.my-score {
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-family: "Nunito Sans", sans-serif;
+    color: #444;
+}
+
+.points-per-sec {
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-family: "Nunito Sans", sans-serif;
+    color: #444;
+}
