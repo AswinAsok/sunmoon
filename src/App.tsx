@@ -80,13 +80,20 @@ export default function SunVsMoon() {
 
         // Subscribe to realtime updates
         const subscription = supabase
-            .channel("public:game_scores")
+            .channel("public:game_scores") // Specify the channel
             .on(
-                "postgres_changes",
-                { event: "*", schema: "public", table: "game_scores" },
-                (payload: { new: GameScore }) => {
-                    if (payload.new.name === "sun") setSunScore(payload.new.score);
-                    if (payload.new.name === "moon") setMoonScore(payload.new.score);
+                "postgres_changes", // Event type
+                {
+                    event: "*", // All events (INSERT, UPDATE, DELETE)
+                    schema: "public", // Schema name
+                    table: "game_scores", // Table name
+                },
+                (payload) => {
+                    // Handle real-time updates
+                    if ((payload.new as { name: string; score: number }).name === "sun")
+                        setSunScore((payload.new as { name: string; score: number }).score);
+                    if ((payload.new as { name: string; score: number }).name === "moon")
+                        setMoonScore((payload.new as { name: string; score: number }).score);
                 }
             )
             .subscribe();
@@ -190,7 +197,7 @@ export default function SunVsMoon() {
             <p className="footer">
                 Made with ❤️ by{" "}
                 <a
-                    href="https://twitter.com/mayeedwin1"
+                    href="https://github.com/AswinAsok"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="link"
