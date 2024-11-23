@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { motion } from "framer-motion";
+import { useSpring, animated } from "@react-spring/web"; // Import react-spring
 import "./App.css";
-import { use } from "framer-motion/client";
 
 // Define the shape of the game scores
 interface GameScore {
@@ -32,10 +32,14 @@ export default function SunVsMoon() {
 
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // add useeffect which updates the sun and moon score by 1 every second
+    // Smooth animation for scores using react-spring
+    const animatedSunScore = useSpring({ value: sunScore, from: { value: prevSunScore.current } });
+    const animatedMoonScore = useSpring({
+        value: moonScore,
+        from: { value: prevMoonScore.current },
+    });
 
     // useEffect(() => {
-
     //     const interval = setInterval(() => {
     //         incrementScore("sun");
     //         incrementScore("moon");
@@ -104,7 +108,7 @@ export default function SunVsMoon() {
 
             prevSunScore.current = sunScore;
             prevMoonScore.current = moonScore;
-        }, 1000);
+        }, 500);
 
         return () => clearInterval(interval);
     }, [sunScore, moonScore]);
@@ -133,6 +137,7 @@ export default function SunVsMoon() {
     return (
         <div className="container">
             <h1 className="title">Sun vs Moon</h1>
+            <p className="tagline">Click the buttons to score points for the sun and moon!</p>
 
             <div className="score-section">
                 {/* Sun Section */}
@@ -143,7 +148,14 @@ export default function SunVsMoon() {
                         className="image"
                     />
 
-                    <h2 className="score">Total: {sunScore} Points</h2>
+                    {/* Smooth animated score */}
+                    <h2 className="score">
+                        Total:{" "}
+                        <animated.span>
+                            {animatedSunScore.value.to((val) => Math.floor(val))}
+                        </animated.span>{" "}
+                        Points
+                    </h2>
                     <button className="button sun-button" onClick={() => incrementScore("sun")}>
                         +1 Sun
                     </button>
@@ -159,7 +171,14 @@ export default function SunVsMoon() {
                         className="image"
                     />
 
-                    <h2 className="score">Total: {moonScore} Points</h2>
+                    {/* Smooth animated score */}
+                    <h2 className="score">
+                        Total:{" "}
+                        <animated.span>
+                            {animatedMoonScore.value.to((val) => Math.floor(val))}
+                        </animated.span>{" "}
+                        Points
+                    </h2>
                     <button className="button moon-button" onClick={() => incrementScore("moon")}>
                         +1 Moon
                     </button>
@@ -167,6 +186,18 @@ export default function SunVsMoon() {
                     <h4 className="points-per-sec">{moonPointsPerSec} Points per second</h4>
                 </motion.div>
             </div>
+
+            <p className="footer">
+                Made with ❤️ by{" "}
+                <a
+                    href="https://twitter.com/mayeedwin1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="link"
+                >
+                    Kuttycoder Aswin
+                </a>
+            </p>
         </div>
     );
 }
