@@ -5,10 +5,6 @@ import { useSpring, animated } from "@react-spring/web"; // Import react-spring
 import "./App.css";
 
 // Define the shape of the game scores
-interface GameScore {
-    name: string;
-    score: number;
-}
 
 export default function SunVsMoon() {
     const [sunScore, setSunScore] = useState<number>(0);
